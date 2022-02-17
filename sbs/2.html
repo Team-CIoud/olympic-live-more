@@ -33,6 +33,10 @@
     <script src="https://cdn.jsdelivr.net/hls.js/latest/hls.js"></script>
     <script src="https://unpkg.com/plyr@3"></script>
     <script>
+      if (location.protocol.split(':')[0] == "https") {
+        window.location.replace('http:'+location.href.split(location.protocol)[1])
+      }
+      
       let poster = ['bejing_olympic.jpg', 'olympic.jpg'];
 
       document.body.querySelector('video').poster =
