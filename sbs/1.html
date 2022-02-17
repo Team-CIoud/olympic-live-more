@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/plyr@3/dist/plyr.css" />
+    <title>Plyr Video Player</title>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+      }
+      iframe,
+      .plyr {
+        width: 100vw;
+        height: 100vh;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <video
+      preload="none"
+      id="player"
+      autoplay
+      controls
+      crossorigin
+      poster
+    ></video>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/hls.js/latest/hls.js"></script>
+    <script src="https://unpkg.com/plyr@3"></script>
+    <script>
+      let poster = ['bejing_olympic.jpg', 'olympic.jpg'];
+
+      document.body.querySelector('video').poster =
+        'https://allpgs.github.io/video-hosting/images/olympics/' +
+        poster[Math.floor(Math.random() * poster.length)];
+
+      (function () {
+        let video = document.querySelector('#player');
+
+        if (Hls.isSupported()) {
+          let hls = new Hls();
+          let stream = 'http://119.200.131.11:1935/KBCTV/tv/playlist.m3u8';
+          hls.loadSource(stream);
+          console.log(stream);
+          hls.attachMedia(video);
+          hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            video.play();
+          });
+        }
+
+        const player = new Plyr('#player');
+        window.player = player;
+      })();
+    </script>
+  </body>
+</html>
